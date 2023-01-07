@@ -9,7 +9,7 @@ const input = (character) => {
 
     //นำตัวแปรด้านบนมาเช็ค if/else หาก user ใส่สัญญาลักษ์ก่อนตัวเลข browser จะ alert
     if (operatorRegex.test(display.value)) {
-        alert("The first character cannot be an operator");
+        alert("ฮั่นแน่ ไปใส่ตัวเลขก่อน");
     } else {
         display.value = display.value + character //แสดงค่าใน input tag
     }
