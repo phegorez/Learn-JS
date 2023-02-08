@@ -1,43 +1,52 @@
-const addButton = document.getElementById('enter')
-const userInput = document.getElementById('userInput')
-const ul = document.querySelector('ul')
-const todos = []
+const addButton = document.getElementById('enter');
+const userInput = document.getElementById('userInput');
+const ul = document.querySelector('ul');
+
+let todos = [];
 
 const addInput = (input) => {
-    if(input){
-        todos.push(input)
-    }
-    
-}
+  if (input) {
+    todos.push({ task: input, isComplete: false });
+  }
+};
 
 const createList = () => {
-    addInput(userInput.value)
+  addInput(userInput.value);
 
-    while (ul.firstChild) {
-        ul.removeChild(ul.lastChild)
+  todos.forEach((todo, index) => {
+    let li = ul.children[index];
+    if (!li) {
+      li = document.createElement('li');
+      li.appendChild(document.createTextNode(todo.task));
+      ul.appendChild(li);
+
+      const doneTask = () => {
+        todos[index].isComplete = !todos[index].isComplete;
+        li.classList.toggle('done');
+      };
+
+      li.addEventListener('click', doneTask);
+
+      const deleteButton = document.createElement('button');
+      deleteButton.appendChild(document.createTextNode('x'));
+      li.appendChild(deleteButton);
+
+      deleteButton.addEventListener('click', () => {
+        todos.splice(index, 1);
+        li.remove();
+      });
+    } else {
+      li.firstChild.nodeValue = todo.task;
     }
 
-    todos.forEach((todo) => {
-        const li = document.createElement('li')
-        li.appendChild(document.createTextNode(todo))
-        ul.appendChild(li)
+    if (todo.isComplete) {
+      li.classList.add('done');
+    } else {
+      li.classList.remove('done');
+    }
+  });
 
-        userInput.value = ''
+  userInput.value = '';
+};
 
-        const doneTask = () => {
-            li.classList.toggle('done')
-        }
-
-        li.addEventListener('click', doneTask)
-
-        const deleteButton = document.createElement('button')
-        deleteButton.appendChild(document.createTextNode('x'))
-        li.appendChild(deleteButton)
-
-        deleteButton.addEventListener('click', () => {
-            li.classList.add('delete')
-        })
-    })
-}
-
-addButton.addEventListener('click', createList)
+addButton.addEventListener('click', createList);
