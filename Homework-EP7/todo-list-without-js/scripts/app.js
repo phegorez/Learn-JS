@@ -44,6 +44,8 @@ const createList = () => {
     } else {
       li.classList.remove('done');
     }
+
+    console.log(todos)
   });
 
   userInput.value = '';
