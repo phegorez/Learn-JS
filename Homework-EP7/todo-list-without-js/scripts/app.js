@@ -14,7 +14,9 @@ const createList = () => {
   addInput(userInput.value);
 
   todos.forEach((todo, index) => {
+
     let li = ul.children[index];
+
     if (!li) {
       li = document.createElement('li');
       li.appendChild(document.createTextNode(todo.task));
